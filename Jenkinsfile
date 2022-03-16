@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
+                sh 'docker-compose --version'
                 sh 'node --version'
-                sh 'svn --version'
             }
         }
     }
