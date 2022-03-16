@@ -4,8 +4,13 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker-compose --version'
-                sh 'node --version'
             }
         }
+        
+        stage('Build') {
+			steps {
+				sh 'docker-compose build'
+			}
+		}
     }
 }
