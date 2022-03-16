@@ -4,7 +4,7 @@ FROM node:16.13.1-alpine
 WORKDIR /usr/app
 # Install app dependencies
 COPY package*.json ./
-RUN npm install -qy
+RUN npm install
 # Copy app to container
 COPY . .
 # Run the "server" script in package.json
