@@ -1,9 +1,12 @@
 # Pull Docker Hub base image
-FROM node:16.13.1-alpine
+FROM node:17.7.1-alpine3.14
+# Create working directory
+RUN mkdir -p /home/app
 # Set working directory
-WORKDIR /usr/app
-# Install app dependencies
+WORKDIR /home/app
+# Copy app to container
 COPY package*.json ./
+# Install app dependencies
 RUN npm install
 # Copy app to container
 COPY . .
