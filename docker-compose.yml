@@ -1,13 +1,61 @@
 version: "3"
 services:
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+    networks:
+      - lslab3-repo-network
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    networks:
+      - lslab3-repo-network
+    volumes:
+      - ./server:/home/app
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db:27017/iu
+
   client:
     build:
       context: ./client
       dockerfile: Dockerfile
-    image: anyam22/lslab3-client:v1
+    ports:
+      - 3000:3000
+    networks:
+      - lslab3-repo-network
+    volumes:
+      - ./client:/home/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true
 
-  server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    image: anyam22/lslab3-server:v1
+  db:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - lslab3-repo-network
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  lslab3-repo-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
