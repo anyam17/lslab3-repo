@@ -26,14 +26,14 @@ app.use(express.static("client/build"));  // App setting for production.
 /*********************************/
 /***** ROUTES FOR USER . ******/
 /*********************************/
-app.get('/api/users', (req, res) => {
+app.get('/users', (req, res) => {
     User.find().sort({_id: 'desc'}).exec((err, data) => {
         if(err) return res.status(404).send(err);
         res.status(200).send(data);
     })
 })
 
-app.post('/api/user', (req, res) => {
+app.post('/user', (req, res) => {
     try {
         const user = new User(req.body);
 
@@ -50,7 +50,7 @@ app.post('/api/user', (req, res) => {
     }
 })
 
-app.put('/api/user', (req, res) => {
+app.put('/user', (req, res) => {
     const id = req.query._id;
 
     User.findByIdAndUpdate(id, req.body, {new: true}, (err, data) => {
@@ -63,7 +63,7 @@ app.put('/api/user', (req, res) => {
     })
 })
 
-app.delete('/api/user', (req, res) => {
+app.delete('/user', (req, res) => {
     const id = req.query.id;
     User.findByIdAndDelete(id, (err, data) => {
         if(err) return res.status(400).send(err);

@@ -6,7 +6,7 @@ const config = {
     default: {
         SECRET: 'SUPERSECRETPASSWORD123',
        // DATABASE: 'mongodb://127.0.0.1:27017/iu'
-        DATABASE: 'mongodb://mongo:27017/iu'
+        DATABASE: 'mongodb://db:27017/iu'
     }
 }
 
