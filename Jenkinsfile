@@ -17,9 +17,11 @@ pipeline {
 
         stage('Publish Image To Docker Hub') {
             steps {
-                docker.withRegistry('', 'bea1fae4-c046-4439-a5d8-4245e56aca95') {
-                    sh 'docker push anyam22/lslab3-server:latest'
-                    // sh 'docker push anyam22/lslab3-client:latest'
+                script {
+                    docker.withRegistry('', 'bea1fae4-c046-4439-a5d8-4245e56aca95') {
+                        sh 'docker push anyam22/lslab3-server:latest'
+                        // sh 'docker push anyam22/lslab3-client:latest'
+                    }
                 }
             }
         }
