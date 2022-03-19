@@ -50,7 +50,7 @@ app.post('/user', (req, res) => {
     }
 })
 
-app.put('/user', (req, res) => {
+app.put('/api/user', (req, res) => {
     const id = req.query._id;
 
     User.findByIdAndUpdate(id, req.body, {new: true}, (err, data) => {
