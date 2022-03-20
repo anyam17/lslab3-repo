@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  # Start of pod specification.
+  template:
+    metadata:
+      name: server-pod
+      labels:
+        app: server
+    spec:
+      containers:
+        - name: lslab3-server
+          image: anyam22/lslab3-server:latest
+          # ports:
+          #   - containerPort: 4000
+          resources:
+          # This QoS is (Guaranteed) as we specified the limit.
+          # The K8s scheduler can now schedule appropriately. 
+          # If this limit is exceeded, the scheduler will restart this pod.
+            requests: 
+              memory: 200Mi
+              cpu: 100m
+            limits:
+              memory: 200Mi
+              cpu: 100m
+          env:
+            - name: MONGO_URL 
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credentials
+                  key: mongo-url
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: server
+  ports:
+  - port: 4000
+    targetPort: 4000

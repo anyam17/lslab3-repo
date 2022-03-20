@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      name: client-pod
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: lslab3-client
+          image: anyam22/lslab3-client:latest
+          # ports:
+          #   - containerPort: 3000
+          resources:
+          # QoS: When a request is not specified K8s uses the default Best Effort.
+          #      When the request is specified as below, K8s uses (Burstable) as there is no limit.
+          # This resource is just an estimate of what we think the pod can utilise.
+            requests:     
+              memory: 200Mi
+              cpu: 100m
+            
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

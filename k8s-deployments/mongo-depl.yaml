@@ -1,0 +1,57 @@
+apiVersion: v1
+# This will create a persistent storage on the host machine
+# that is outside the pod on which the container is running.
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 512Mi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-depl
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      name: mongo-pod
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:3.6.17-xenial
+          # ports:
+          #   - containerPort: 27017
+          volumeMounts:
+            - name: storage
+              mountPath: /data/db
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: mongo
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
