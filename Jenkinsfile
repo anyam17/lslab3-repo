@@ -24,15 +24,15 @@ pipeline {
         //     }
         // }
 
-        stage('Copy Deployments to K8s Cluster') {
+        stage('Connection To K8s Cluster') {
             steps {
-                sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
+                sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129'
             }
         }
 
-        stage('Connection To K8s Cluster') {
+        stage('Copy Deployments to K8s Cluster') {
             steps {
-                sh 'ssh ubuntu@13.58.67.129'
+                sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
             }
         }
 
