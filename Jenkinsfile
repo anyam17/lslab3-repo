@@ -25,20 +25,26 @@ pipeline {
         // }
 
         stage('Connection To K8s Cluster') {
-            steps {
-                sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129'
+            sshagent(['ssh-creds']) {
+                steps {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129'
+                }
             }
         }
 
         stage('Copy Deployments to K8s Cluster') {
-            steps {
-                sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
+            sshagent(['ssh-creds']) {
+                steps {
+                    sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
+                }
             }
         }
 
-        stage('Publish Image To Docker Hub') {
-            steps {
-                sh 'kubectl apply -f k8s-deployments'
+        stage('Deploy Pods') {
+            sshagent(['ssh-creds']) {
+                steps {
+                    sh 'kubectl apply -f k8s-deployments'
+                }
             }
         }
     }
