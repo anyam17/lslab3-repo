@@ -32,20 +32,20 @@ pipeline {
             }
         }
 
-        // stage('Copy Deployments to K8s Cluster') {
-        //     sshagent(['ssh-creds']) {
-        //         steps {
-        //             sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
-        //         }
-        //     }
-        // }
+        stage('Copy Deployments to K8s Cluster') {
+            steps {
+                sshagent(['ssh-creds']) {
+                    sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
+                }
+            }
+        }
 
-        // stage('Deploy Pods') {
-        //     sshagent(['ssh-creds']) {
-        //         steps {
-        //             sh 'kubectl apply -f k8s-deployments'
-        //         }
-        //     }
-        // }
+        stage('Deploy Pods') {
+            steps {
+                sshagent(['ssh-creds']) {
+                    sh 'kubectl apply -f k8s-deployments'
+                }
+            }
+        }
     }
 }
