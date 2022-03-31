@@ -25,27 +25,27 @@ pipeline {
         // }
 
         stage('Connection To K8s Cluster') {
-            sshagent(['ssh-creds']) {
-                steps {
+            steps {
+                sshagent(['ssh-creds']) {
                     sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129'
                 }
             }
         }
 
-        stage('Copy Deployments to K8s Cluster') {
-            sshagent(['ssh-creds']) {
-                steps {
-                    sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
-                }
-            }
-        }
+        // stage('Copy Deployments to K8s Cluster') {
+        //     sshagent(['ssh-creds']) {
+        //         steps {
+        //             sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
+        //         }
+        //     }
+        // }
 
-        stage('Deploy Pods') {
-            sshagent(['ssh-creds']) {
-                steps {
-                    sh 'kubectl apply -f k8s-deployments'
-                }
-            }
-        }
+        // stage('Deploy Pods') {
+        //     sshagent(['ssh-creds']) {
+        //         steps {
+        //             sh 'kubectl apply -f k8s-deployments'
+        //         }
+        //     }
+        // }
     }
 }
