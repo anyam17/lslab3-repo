@@ -43,8 +43,7 @@ pipeline {
         stage('Connect To K8s Cluster & Deploy Pods') {
             steps {
                 sshagent(['ssh-creds']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129'
-                    sh 'kubectl apply -f k8s-deployments'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129 kubectl apply -f k8s-deployments'
                 }
             }
         }
