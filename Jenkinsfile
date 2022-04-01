@@ -27,7 +27,7 @@ pipeline {
         // stage('Connection To K8s Cluster') {
         //     steps {
         //         sshagent(['ssh-creds']) {
-        //             sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129'
+        //             sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.188.224.171'
         //         }
         //     }
         // }
@@ -35,7 +35,7 @@ pipeline {
         stage('Copy Deployments to K8s Cluster') {
             steps {
                 sshagent(['ssh-creds']) {
-                    sh 'scp -r k8s-deployments/ ubuntu@13.58.67.129:/home/ubuntu'
+                    sh 'scp -r k8s-deployments/ ubuntu@18.188.224.171:/home/ubuntu'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Connect To K8s Cluster & Deploy Pods') {
             steps {
                 sshagent(['ssh-creds']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@13.58.67.129 kubectl apply -f k8s-deployments'
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.188.224.171 kubectl apply -f k8s-deployments'
                 }
             }
         }
