@@ -24,13 +24,13 @@ pipeline {
         //     }
         // }
 
-        // stage('Connection To K8s Cluster') {
-        //     steps {
-        //         sshagent(['ssh-creds']) {
-        //             sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.188.224.171'
-        //         }
-        //     }
-        // }
+        stage('Connection To K8s Cluster') {
+            steps {
+                sshagent(['ssh-creds']) {
+                    sh 'ssh -o StrictHostKeyChecking=no ubuntu@18.188.224.171'
+                }
+            }
+        }
 
         stage('Copy Deployments to K8s Cluster') {
             steps {
