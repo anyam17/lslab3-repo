@@ -8,7 +8,7 @@ spec:
   ingressClassName: nginx
   rules:
   # - host: cyberinnova.net
-    http:
+  - http:
       paths:
         - path: /api/?(.*)
           pathType: Prefix
