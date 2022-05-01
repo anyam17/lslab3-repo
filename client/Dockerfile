@@ -1,5 +1,5 @@
 # Pull Node Js from Docker Hub. Alphine is a lightweigh O.S
-FROM node:17.7.1-alpine3.14
+FROM node:17.9.0-alpine3.14
 
 # Create working directory
 RUN mkdir -p /home/app
